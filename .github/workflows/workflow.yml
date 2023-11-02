@@ -1,0 +1,27 @@
+name: Workflow
+
+on:
+  schedule:
+    - cron: '*/5 * * * *'
+
+jobs:
+  update:
+    name: Job
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: master
+
+      - name: Change number
+        run: echo $RANDOM > file.txt
+
+      - name: Commit changes
+        uses: EndBug/add-and-commit@v9
+        with:
+          message: 'commit message'
+          default_author: github_actions
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
