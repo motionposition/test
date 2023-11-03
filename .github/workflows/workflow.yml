@@ -18,10 +18,14 @@ jobs:
       - name: Change number
         run: echo $RANDOM > file.txt
 
+      - name: Get number
+        run: echo "NUMBER=$(cat file.txt)" >> $GITHUB_OUTPUT
+        id: number
+
       - name: Commit changes
         uses: EndBug/add-and-commit@v9
         with:
-          message: 'commit message'
+          message: 'commit message :: ${{ steps.number.outputs.NUMBER }}'
           author_name: GitHub Actions
           author_email: actions@github.com
         env:
